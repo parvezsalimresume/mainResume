@@ -13,68 +13,9 @@
         $(".subpages").height(subpagesHeight + 50);
     }
     
-    // Portfolio subpage filters
-    function portfolio_init() {
-        var portfolio_grid = $('#portfolio_grid'),
-            portfolio_filter = $('#portfolio_filters');
-            
-        if (portfolio_grid) {
-
-            portfolio_grid.shuffle({
-                speed: 450,
-                itemSelector: 'figure'
-            });
-
-            $('.site-main-menu').on("click", "a", function (e) {
-                portfolio_grid.shuffle('update');
-            });
+    
 
 
-            portfolio_filter.on("click", ".filter", function (e) {
-                portfolio_grid.shuffle('update');
-                e.preventDefault();
-                $('#portfolio_filters .filter').parent().removeClass('active');
-                $(this).parent().addClass('active');
-                portfolio_grid.shuffle('shuffle', $(this).attr('data-group') );
-                setTimeout(function(){
-                    subpages_resize();
-                }, 500);
-            });
-
-        }
-    }
-    // /Portfolio subpage filters
-
-    // Contact form validator
-    $(function () {
-
-        $('#contact-form').validator();
-
-        $('#contact-form').on('submit', function (e) {
-            if (!e.isDefaultPrevented()) {
-                var url = "contact_form/contact_form.php";
-
-                $.ajax({
-                    type: "POST",
-                    url: url,
-                    data: $(this).serialize(),
-                    success: function (data)
-                    {
-                        var messageAlert = 'alert-' + data.type;
-                        var messageText = data.message;
-
-                        var alertBox = '<div class="alert ' + messageAlert + ' alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' + messageText + '</div>';
-                        if (messageAlert && messageText) {
-                            $('#contact-form').find('.messages').html(alertBox);
-                            $('#contact-form')[0].reset();
-                        }
-                    }
-                });
-                return false;
-            }
-        });
-    });
-    // /Contact form validator
 
     // Hide Mobile menu
     function mobileMenuHide() {
@@ -118,17 +59,6 @@
 
     // On Document Load
     $(document).on('ready', function() {
-        // Initialize Portfolio grid
-        var $portfolio_container = $("#portfolio-grid");
-
-        $portfolio_container.imagesLoaded(function () {
-            setTimeout(function(){
-                portfolio_init(this);
-            }, 500);
-        });
-
-        // Portfolio hover effect init
-        $(' #portfolio_grid > figure ').each( function() { $(this).hoverdir(); } );
 
         // Blog grid init
         setTimeout(function(){
@@ -269,11 +199,6 @@
                 }
             });
 
-        //Google Maps
-        $("#map").googleMap();
-        $("#map").addMarker({
-            address: "15 avenue des champs Elysées 75008 Paris" // Your Address
-        });
     });
 
 })(jQuery);
